@@ -18,6 +18,6 @@ class EavesdropPlugin(MachineBasePlugin):
         event['screen_name']=screen_name.real_name
         print(event)
         if not "subtype" in event:
-            kafka_p.sendData("twitterCapstone", event)
+            kafka_p.sendData("slack", event)
             event_j = JSONEncoder().encode(event)
             kinesis_p.send_to_kinesis(event_j)
