@@ -15,7 +15,10 @@ Steps to run the bot:
   6. Change directory to SlackMachine: `cd /path/to/SlackMachine`
   7. Install dependencies: `pip install -r requirements.txt`
   8. Set environment variable for slack api token for the bot created above, which can be found in the manage custom configurations menu: `export SLACK_APIT_TOKEN=<your token here>`
-  9. Run the bot: `slack-machine`
+  9. Set environment variable for kafka bootstrap server: `export BOOTSTRAP_SERVERS=<your broker address here>`
+  10. Run the bot: `slack-machine`
+  
+Spark Consumer: Spark streaming consumer written in Scala. Gets records from the kafka stream and parses them down to a dataframe consisting of screen_name, user_id, channel, time, and text. Data is then written to hdfs in parquet format in partitions of Date=<YYYYMMdd>/Hour=<HH>.
 
 
 Update (4/29/19):
