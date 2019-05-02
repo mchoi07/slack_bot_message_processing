@@ -18,7 +18,7 @@ Steps to run the bot:
   9. Set environment variable for kafka bootstrap server: `export BOOTSTRAP_SERVERS=<your broker address here>`
   10. Run the bot: `slack-machine`
   
-Spark Consumer: Spark streaming consumer written in Scala. Gets records from the kafka stream and parses them down to a dataframe consisting of screen_name, user_id, channel, time, and text. Data is then written to hdfs in parquet format in partitions of Date=<YYYYMMdd>/Hour=<HH>.
+Spark Consumer: Spark streaming consumer written in Scala. Gets records from the kafka stream and parses them down to a dataframe consisting of screen_name, user_id, channel, time, and text. Data is then written to hdfs in parquet format in partitions of Date=[YYYYMMdd]/Hour=[HH].
 
 
 Update (4/29/19):
