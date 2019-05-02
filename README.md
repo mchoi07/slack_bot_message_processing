@@ -6,7 +6,7 @@ Abstract: Getting message and discussion from slack chennel and process it to S3
 
 SlackMachine: Bot written in python using the slack-machine library. Produces messages from channels it resides in to both a kafka topic and a kinesis stream.
 
-Steps to run the bot:
+# Steps to run the bot:
   1. Create bot for your workspace by adding a Custom bot integration.
   2. Add bot to channels of your choice
   3. Download SlackMachine directory
@@ -14,7 +14,7 @@ Steps to run the bot:
   5. Activate virtual environment with: `source venv/bin/activate`
   6. Change directory to SlackMachine: `cd /path/to/SlackMachine`
   7. Install dependencies: `pip install -r requirements.txt`
-  8. Set environment variable for slack api token for the bot created above, which can be found in the manage custom configurations menu: `export SLACK_APIT_TOKEN=<your token here>`
+  8. Set environment variable for slack api token for the bot created above, which can be found in the manage custom configurations menu: `export SLACK_API_TOKEN=<your token here>`
   9. Set environment variable for kafka bootstrap server: `export BOOTSTRAP_SERVERS=<your broker address here>`
   10. Run the bot: `slack-machine`
   
