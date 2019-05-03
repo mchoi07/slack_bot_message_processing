@@ -1,15 +1,13 @@
 --For importing data to a hive table
-create external table if not exists slackbot (
-	screen_name text,
-	user_id text,
-	channel text,
-	time timestamp,
-	text text
+use slack;
+create external table if not exists messages (
+	screen_name string,
+	user_id string,
+	channel string,
+	`time` timestamp,
+	text string
 )
-row format delimited
-fields terminated by ','
-stored as textfile;
-
-load data inpath 'slackbot' into table slackbot;
-
-
+partitioned by (`date` string, hour string)
+stored as orc
+location '/user/maria_dev/slackbot_out/';
+msck repair table messages;
