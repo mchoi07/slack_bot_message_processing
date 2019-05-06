@@ -1,7 +1,7 @@
 
 #import libaries
 import os
-import message
+#import message
 
 from slackclient import SlackClient
 
