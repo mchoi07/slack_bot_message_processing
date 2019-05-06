@@ -1,0 +1,6 @@
+venv
+**/project
+**/spark-warehouse
+**/target
+.idea/
+__pycache__
