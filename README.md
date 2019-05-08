@@ -20,6 +20,13 @@ SlackMachine: Bot written in python using the slack-machine library. Produces me
   
 Spark Consumer: Spark streaming consumer written in Scala. Gets records from the kafka stream and parses them down to a dataframe consisting of screen_name, user_id, channel, time, and text. Data is then written to hdfs in parquet format in partitions of Date=[YYYYMMdd]/Hour=[HH].
 
+Airflow & Hive: Airflow dag that calls a Hive script which creates an external table over spark output if it does not already exist and then looks for new partitions to add.
+
+Lambda: Triggers on data being added to S3. Reads the json data and extracts necessary values and then sends it to and RDS MySQL instance.
+
+Project Architecture
+![image](https://drive.google.com/uc?export=view&id=1lNRFxWO1RYV5DAcDicwqXfVykFv73qES)
+
 
 Update (4/29/19):
 This program utilizes a library called `slack-machine` which can be installed and set up using this link:
