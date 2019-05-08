@@ -1,10 +1,10 @@
+import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.spark._
-import org.apache.spark.streaming._
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
-import org.apache.kafka.common.serialization.StringDeserializer
-import org.apache.spark.streaming.kafka010._
+import org.apache.spark.streaming._
 import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
+import org.apache.spark.streaming.kafka010._
 
 object slackConsumer {
 
@@ -21,11 +21,11 @@ object slackConsumer {
     val topics = List("slackMessages").toSet
     val test_kafka = "localhost:9092"
     val sandbox_kafka = "sandbox.hortonworks.com:6667"
-    val outpath= "path/to/output"//your output path here
+    val outpath= "hdfs://sandbox.hortonworks.com:8020/user/maria_dev/slackbot_out"
 
     //Change map of bootstrap servers to sandbox_kafka when using for hortonworks
     val kafkaParams = Map(
-      "bootstrap.servers" -> test_kafka,
+      "bootstrap.servers" -> sandbox_kafka,
       "key.deserializer" -> classOf[StringDeserializer],
       "value.deserializer" -> classOf[StringDeserializer],
       "group.id" -> "slack", // Your consumer group
@@ -43,8 +43,7 @@ object slackConsumer {
 
       if (!rddRaw.isEmpty) {
 
-        val spark = SparkSession.builder.config(rddRaw.sparkContext.getConf).getOrCreate()
-
+        val spark = SparkSession.builder.config(rddRaw.sparkContext.getConf).enableHiveSupport().getOrCreate()
 
         val df = spark.read.json(rddRaw)
 
@@ -65,13 +64,11 @@ object slackConsumer {
           .write
           .mode("append")
           .partitionBy("date", "hour")
-          .format("parquet")
+          .format("orc")
           .save(outpath)
-
 
       }
     }
-
 
     ssc.start()
     ssc.awaitTermination()

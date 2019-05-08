@@ -1,13 +1,13 @@
 --For importing data to a hive table
-use slack;
-create external table if not exists messages (
+USE slack;
+CREATE EXTERNAL TABLE if NOT EXISTS messages (
 	screen_name string,
 	user_id string,
 	channel string,
 	`time` timestamp,
 	text string
 )
-partitioned by (`date` string, hour string)
-stored as orc
-location '/user/maria_dev/slackbot_out/';
-msck repair table messages;
+PARTITIONED BY (`date` string, hour string)
+STORED AS ORC
+LOCATION '/user/maria_dev/slackbot_out/';
+MSCK REPAIR TABLE messages;
