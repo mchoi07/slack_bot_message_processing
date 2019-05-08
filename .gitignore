@@ -1,1 +1,8 @@
 venv
+**/project
+**/spark-warehouse
+**/target
+.idea/
+__pycache__
+lamdapkg.zip
+RDS_credentials.py

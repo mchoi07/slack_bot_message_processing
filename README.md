@@ -6,7 +6,7 @@ Abstract: Getting message and discussion from slack chennel and process it to S3
 
 SlackMachine: Bot written in python using the slack-machine library. Produces messages from channels it resides in to both a kafka topic and a kinesis stream.
 
-Steps to run the bot:
+# Steps to run the bot:
   1. Create bot for your workspace by adding a Custom bot integration.
   2. Add bot to channels of your choice
   3. Download SlackMachine directory
@@ -14,8 +14,18 @@ Steps to run the bot:
   5. Activate virtual environment with: `source venv/bin/activate`
   6. Change directory to SlackMachine: `cd /path/to/SlackMachine`
   7. Install dependencies: `pip install -r requirements.txt`
-  8. Set environment variable for slack api token for the bot created above, which can be found in the manage custom configurations menu: `export SLACK_APIT_TOKEN=<your token here>`
-  9. Run the bot: `slack-machine`
+  8. Set environment variable for slack api token for the bot created above, which can be found in the manage custom configurations menu: `export SLACK_API_TOKEN=<your token here>`
+  9. Set environment variable for kafka bootstrap server: `export BOOTSTRAP_SERVERS=<your broker address here>`
+  10. Run the bot: `slack-machine`
+  
+Spark Consumer: Spark streaming consumer written in Scala. Gets records from the kafka stream and parses them down to a dataframe consisting of screen_name, user_id, channel, time, and text. Data is then written to hdfs in parquet format in partitions of Date=[YYYYMMdd]/Hour=[HH].
+
+Airflow & Hive: Airflow dag that calls a Hive script which creates an external table over spark output if it does not already exist and then looks for new partitions to add.
+
+Lambda: Triggers on data being added to S3. Reads the json data and extracts necessary values and then sends it to and RDS MySQL instance.
+
+Project Architecture
+![image](https://drive.google.com/uc?export=view&id=1lNRFxWO1RYV5DAcDicwqXfVykFv73qES)
 
 
 Update (4/29/19):
